@@ -52,7 +52,7 @@
                 alignItems='baseline'
               >
                 <Grid item sm={9}>
-                  <IconButton component={RouterLink} to="/Home">
+                  <IconButton component={RouterLink} to="/Home" color="inherit">
                     <ArrowBackIcon />
                   </IconButton>
                 </Grid>
@@ -152,9 +152,15 @@
                       <Typography variant='h4'>{books.title}</Typography>
                     </Grid>
                     <Grid item sm={4} align='right'>
-                      <Typography variant='h6' color='secondary'>
-                        {books.status}
+                    {result.available === 'Available' ? (
+                      <Typography variant='h6' color="primary">
+                        Available
                       </Typography>
+                    ) : result.available != 'Available' ? (
+                      <Typography variant='h6' color="secondary">
+                        Not Available
+                      </Typography>
+                    ) : null }
                     </Grid>
                   </Grid>
                   <Typography
