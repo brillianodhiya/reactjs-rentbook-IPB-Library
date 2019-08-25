@@ -1,0 +1,71 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	background: #000;
+}
+.smoke
+{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+.smoke span
+{
+	position: relative;
+	color: #fff;
+	font-family: sans-serif;
+	font-weight: bold;
+	letter-spacing: 10px;
+	text-transform: uppercase;
+	font-size: 20px;
+	animation: animate 3s linear infinite;
+}
+.smoke span:nth-child(1)
+{
+	animation-delay: 0s;
+}
+.smoke span:nth-child(2)
+{
+	animation-delay: 0.1s;
+}
+.smoke span:nth-child(3)
+{
+	animation-delay: 0.2s;
+}
+.smoke span:nth-child(4)
+{
+	animation-delay: 0.3s;
+}
+.smoke span:nth-child(5)
+{
+	animation-delay: 0.4s;
+}
+.smoke span:nth-child(6)
+{
+	animation-delay: 0.5s;
+}
+.smoke span:nth-child(7)
+{
+	animation-delay: 0.6s;
+}
+@keyframes animate
+{
+	0%
+	{
+		filter: blur(0);
+	}
+	40%
+	{
+		filter: blur(20px);
+	}
+	80%
+	{
+		filter: blur(0);
+	}
+	100%
+	{
+		filter: blur(0);
+	}
+}
