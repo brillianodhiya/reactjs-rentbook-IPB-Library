@@ -13,21 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../bookshelf.svg";
 import Axios from "axios";
-// eslint-disable-next-line
-function Privacy() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"By signing up, you agree to Book’s "}
-      <Link color="inherit" href="#">
-        Terms and Conditions
-      </Link>
-      {"& "}
-      <Link color="inherit" href="#">
-        Privacy Policy
-      </Link>
-    </Typography>
-  );
-}
+import Privacy from "../components/Privacy"
 
 const styles = theme => ({
   root: {

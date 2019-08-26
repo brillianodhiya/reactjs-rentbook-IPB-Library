@@ -13,20 +13,16 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../bookshelf.svg";
 import Axios from "axios";
-// eslint-disable-next-line
-function Privacy() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"By signing up, you agree to Book’s "}
-      <Link color="inherit" href="#">
-        Terms and Conditions
-      </Link>
-      {"& "}
-      <Link color="inherit" href="#">
-        Privacy Policy
-      </Link>
-    </Typography>
-  );
+import Privacy from "../components/Privacy"
+import { fadeInLeft } from "react-animations";
+import Radium, {StyleRoot} from "radium";
+
+
+const stylesAnimation = {
+  fadeInLeft: {
+    animation: 'x ls',
+    animationName: Radium.keyframes(fadeInLeft, 'fadeInLeft')
+  }
 }
 
 const styles = theme => ({
@@ -73,7 +69,7 @@ const styles = theme => ({
     margin: theme.spacing(1, 0),
     border: "1px solid",
     borderColor: theme.palette.text.primary
-  }
+  },
 });
 
 class RegiInSide extends React.Component {
@@ -120,16 +116,20 @@ class RegiInSide extends React.Component {
     return (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
+
         <Box
           component="div"
           display={{ xs: "none", sm: "block" }}
           className={classes.textfloat}
         >
-          <Typography component="h1" variant="h4">
+          <StyleRoot >
+          <Typography component="h1" variant="h4" style={stylesAnimation.fadeInLeft}>
             IPB Library, <br />
             The Place For Borrow Book &nbsp; &nbsp; &nbsp;
           </Typography>
+          </StyleRoot>
         </Box>
+
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <img src={logo} className={classes.logo} alt="logo" />
@@ -145,8 +145,8 @@ class RegiInSide extends React.Component {
                 fullWidth
                 id="username"
                 label="Username"
-                name="username"
                 autoComplete="username"
+                name="username"
                 autoFocus
                 onChange={this.handleUsernameChange}
               />
@@ -197,7 +197,7 @@ class RegiInSide extends React.Component {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link component={RouterLink} variant="body2" to="/">
+                  <Link component={RouterLink} variant="body2" to="/Login">
                     {"Have an account? Login"}
                   </Link>
                 </Grid>
