@@ -1,49 +1,62 @@
 import React from "react";
-import Axios from "axios";
-import {Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import "../../App.css";
+import { connect } from "react-redux";
+import Loading from "./loading";
+import Pagination from "../components/Pagination";
 // eslint-disable-next-line
 class MediaCard extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      books: []
-    };
+      pageOfItems: [],
+    }
+    this.onChangePage = this.onChangePage.bind(this);
   }
-  componentDidMount() {
-    const url = "http://localhost:8888/books";
-    Axios.get(url)
-      .then(response => response.data.result)
-      .then(data => {
-        this.setState({ books: data });
-        console.log(this.state.books);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  onChangePage(pageOfItems) {
+    this.setState({
+      pageOfItems: pageOfItems
+    });
   }
   render() {
+    const { book } = this.props
     return (
+      <div>
+      <Pagination items={book.bookList} onChangePage={this.onChangePage} />
       <Grid container spacing={3}>
-        {this.state.books.map(result => (
-          <Grid item xs key={result.idbooks}>
+        {book.bookList
+          ? this.state.pageOfItems.map ((books, index) => {
+            return (
+          <Grid item xs key={index}>
             <div className="box">
               <div className="imgBx">
-                <img src={result.image} alt="" />
+                <img src={books.image} alt="" />
               </div>
+              <RouterLink to={`/${books.idbooks}`} style={{ textDecoration: 'none', color: 'black' }}>
               <div className="content">
-                <RouterLink to={`/${result.idbooks}`} style={{ textDecoration: 'none', color: 'black' }}>
-                 <h3>{result.title}</h3>
-                </RouterLink>
-                <p>{result.description}</p>
+                 <h3>{books.title}</h3>
+                <p>{books.description}</p>
               </div>
+              </RouterLink>
             </div>
           </Grid>
-        ))}
+            )
+          })
+          : <Loading />
+        }
       </Grid>
+      </div>
     );
   }
 }
 
-export default MediaCard;
+const mapStateToProps = state => {
+  return {
+    book: state.book
+  }
+}
+
+export default connect (mapStateToProps) (MediaCard);
