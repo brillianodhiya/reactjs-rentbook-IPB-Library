@@ -32,9 +32,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import AddBook from "./addBook";
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Category from "../components/category";
 // eslint-disable-next-line
 const drawerWidth = 340;
 
@@ -148,17 +146,8 @@ class HomePage extends React.Component {
   state = {
     drawerIsOpen: false,
     modalIsOpen: false,
-    username: "",
-    decode: [],
-    ancholEl: null
   };
 
-  handleClick = event => {
-    this.setState({ ancholEl: event.currentTarget });
-  };
-  handleClose = () => {
-    this.setState({ ancholEl: null });
-  };
   handleDrawerOpen = () => {
     this.setState({ drawerIsOpen: true });
   };
@@ -205,26 +194,7 @@ class HomePage extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <div>
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                >
-                  All Categories 
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={this.state.anchorEl}
-                  keepMounted
-                  open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Sci-fi</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Action</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Fantasy</MenuItem>
-                </Menu>
-              </div>
+              <Category />
               <TextField
                 id="standard-textarea"
                 label="Search by Title"

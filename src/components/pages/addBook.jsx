@@ -39,10 +39,9 @@ const styles = theme => ({
 });
 
 class addBook extends React.Component {
-    
-    constructor(props) {
-      super(props);
-      this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       genres: [],
       genre: "",
       title: "",
@@ -50,24 +49,24 @@ class addBook extends React.Component {
       image: "",
       setSelectedDate: new Date(Date.now()),
       setOpen: false,
-      show: false,
-      };
-      this.handleTitleChange = this.handleTitleChange.bind(this);
-      this.handleDescriptChange = this.handleDescriptChange.bind(this);
-      this.handleImageChange = this.handleImageChange.bind(this);
-      this.handleDateSelect = this.handleDateSelect.bind(this);
-      this.handleGenreChange = this.handleGenreChange.bind(this);
-    }
-    
+      show: false
+    };
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleDescriptChange = this.handleDescriptChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleDateSelect = this.handleDateSelect.bind(this);
+    this.handleGenreChange = this.handleGenreChange.bind(this);
+  }
+
   componentDidMount = async () => {
     await this.props.dispatch(getGenres());
     this.setState({ genres: this.props.genres.genreList });
     console.log(this.props.genres.genreList);
-  }
+  };
 
   hiddenAlert = () => {
     this.setState({ show: false });
-  }
+  };
 
   handleDateSelect = date => {
     this.setState({ setSelectedDate: date });
@@ -103,15 +102,16 @@ class addBook extends React.Component {
     await this.props.dispatch(
       addBooks(title, description, image, setSelectedDate, genre)
     );
-    swal("Add Book Success!", "Please click the button!", "success")
-    .then(res => {
-      window.location.reload();
-    });
+    swal("Add Book Success!", "Please click the button!", "success").then(
+      res => {
+        window.location.reload();
+      }
+    );
   };
   render() {
     const { classes } = this.props;
     return (
-      <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+      <form className={classes.form} onSubmit={this.handleSubmit}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -166,7 +166,9 @@ class addBook extends React.Component {
           />
         </MuiPickersUtilsProvider>
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="controlled-open-select">Genre</InputLabel>
+          <InputLabel htmlFor="controlled-open-select" required>
+            Genre
+          </InputLabel>
           <Select
             open={this.state.setOpen}
             onClose={this.handleClose}
@@ -180,7 +182,9 @@ class addBook extends React.Component {
             }}
           >
             {this.state.genres.map(result => (
-            <MenuItem key={result.codegenre} value={result.codegenre}>{result.keterangan}</MenuItem>
+              <MenuItem key={result.codegenre} value={result.codegenre}>
+                {result.keterangan}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -210,7 +214,7 @@ const mapStateToProps = state => {
 
 export default compose(
   withStyles(styles, {
-    name: 'addBook',
+    name: "addBook"
   }),
   connect(mapStateToProps)
 )(addBook);

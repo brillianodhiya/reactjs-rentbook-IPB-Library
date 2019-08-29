@@ -27,7 +27,6 @@ import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
 import "../../App.css";
 import MediaCard from "./card";
-import Carousel from "./carousel";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -148,17 +147,8 @@ class HomePage extends React.Component {
   state = {
     drawerIsOpen: false,
     modalIsOpen: false,
-    username: "",
-    decode: [],
-    ancholEl: null
   };
 
-  handleClick = event => {
-    this.setState({ ancholEl: event.currentTarget });
-  };
-  handleClose = () => {
-    this.setState({ ancholEl: null });
-  };
   handleDrawerOpen = () => {
     this.setState({ drawerIsOpen: true });
   };
@@ -205,26 +195,7 @@ class HomePage extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <div>
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                >
-                  All Categories 
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={this.state.anchorEl}
-                  keepMounted
-                  open={Boolean(this.state.anchorEl)}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Sci-fi</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Action</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Fantasy</MenuItem>
-                </Menu>
-              </div>
+              {/* all category here */}
               <TextField
                 id="standard-textarea"
                 label="Search by Title"

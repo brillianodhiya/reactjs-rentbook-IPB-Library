@@ -6,7 +6,7 @@ import "react-id-swiper/lib/styles/css/swiper.css";
 import { connect } from "react-redux";
 import { getBooks } from "../../public/action/books";
 import Loading from "./loading";
-import "../css/carousel.css"
+import "../css/carousel.css";
 
 const params = {
   effect: "coverflow",
@@ -44,51 +44,50 @@ class Carousel extends React.Component {
     };
   }
   componentDidMount = async () => {
-    await this.props.dispatch (getBooks ());
-    this.setState ({
-      getBooks: this.props.book,
+    await this.props.dispatch(getBooks());
+    this.setState({
+      getBooks: this.props.book
     });
   };
 
   render() {
-    
     return (
       <Swiper {...params}>
-        {this.state.getBooks.bookList
-          ? this.state.getBooks.bookList.slice(0, 6).map ((books, index) => {
+        {this.state.getBooks.bookList ? (
+          this.state.getBooks.bookList.slice(0, 6).map((books, index) => {
             return (
-            <div key={index} className="containers">
-              <div className="boxs">
-                <div className="imgBox">
-                  <img src={books.image} alt=""/>
-                </div>
-                <RouterLink to={`/${books.idbooks}`}>
-                <div className="details">
-                  <div className="content">
-                    <h2>{books.title}</h2>
-                    <p>{books.description}</p>
+              <div key={index} className="containers">
+                <div className="boxs">
+                  <div className="imgBox">
+                    <img src={books.image} alt="" />
                   </div>
+                  <RouterLink to={`/${books.idbooks}`}>
+                    <div className="details">
+                      <div className="content">
+                        <h2>{books.title}</h2>
+                        <p>{books.description}</p>
+                      </div>
+                    </div>
+                  </RouterLink>
                 </div>
-                </RouterLink>
               </div>
-            </div>
-            )
+            );
           })
-          : <Loading />
-        }
+        ) : (
+          <Loading />
+        )}
       </Swiper>
     );
   }
 }
 
-
 const mapStateToProps = state => {
   return {
     book: state.book
-  }
-}
+  };
+};
 
-export default connect (mapStateToProps) (Carousel);
+export default connect(mapStateToProps)(Carousel);
 //export default withStyles(styles)(Carousel);
 //export default withStyles(styles)(connect(mapStateToProps)(Carousel));
 // export default compose(

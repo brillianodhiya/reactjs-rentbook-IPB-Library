@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -41,7 +40,9 @@ class DisplayOne extends React.Component {
   componentDidMount = async () => {
     await this.props.dispatch(getBooks());
     this.setState({
-      getBooks: this.props.book
+      getBooks: this.props.book.bookList.filter(
+        book => book.idbooks == this.props.match.params.idbooks
+      )[0]
     });
   };
 
@@ -107,12 +108,9 @@ class DisplayOne extends React.Component {
             buttons: ["Cancel", "Ok!"]
           }).then(value => {
             if (value === null) {
-              swal("Edit Image Canceled");
+              swal("Edit Genre Canceled");
             } else {
               swal(`You Edited The Title To ${value}`);
-              this.setState({
-                image: value
-              });
             }
           });
           break;
@@ -137,8 +135,8 @@ class DisplayOne extends React.Component {
           swal("Edit Book Canceled!");
       }
     });
-    
   };
+
   handleBack = async event => {
     event.preventDefault();
     const title = this.state.title;
@@ -152,31 +150,31 @@ class DisplayOne extends React.Component {
   handleDelete = async event => {
     event.preventDefault();
     const idbooks = this.props.match.params.idbooks;
-      swal("Are You Sure?", {
-        buttons: {
-          sure: {
-            text: "Sure!",
-            value: "sure"
-          },
-          cancel: "Cancel"
+    swal("Are You Sure?", {
+      buttons: {
+        sure: {
+          text: "Sure!",
+          value: "sure"
         },
-        icon: "warning"
-      }).then(async value => {
-        switch (value) {
-          case "sure":
-            swal("This modal will disappear soon!", {
-              buttons: false,
-              timer: 3000,
-            });
-            await this.props.dispatch(deleteBook(idbooks));
-            window.location = "/Home"
+        cancel: "Cancel"
+      },
+      icon: "warning"
+    }).then(async value => {
+      switch (value) {
+        case "sure":
+          swal("This modal will disappear soon!", {
+            buttons: false,
+            timer: 3000
+          });
+          await this.props.dispatch(deleteBook(idbooks));
+          setInterval(() => (window.location = "/Home"), 3200);
           break;
-          
-          default:
-            swal("Delete Canceled");
-        }
-      })
-  }
+
+        default:
+          swal("Delete Canceled");
+      }
+    });
+  };
 
   render() {
     const { book } = this.props;
@@ -209,11 +207,11 @@ class DisplayOne extends React.Component {
                 </Button>
               </Grid>
               <Grid item sm={1}>
-                <Button 
-                  color="secondary" 
+                <Button
+                  color="secondary"
                   className="button"
                   onClick={this.handleDelete}
-                  >
+                >
                   Delete
                 </Button>
               </Grid>
@@ -229,12 +227,24 @@ class DisplayOne extends React.Component {
                   <Paper
                     className="mainFeaturedPost"
                     style={{
-                      backgroundImage: `url(${this.state.image})`
+                      backgroundImage: `url(${
+                        this.state.image == null
+                          ? `${books.image}`
+                          : this.state.image != null
+                          ? `${this.state.image}`
+                          : null
+                      })`
                     }}
                   >
                     <img
                       style={{ display: "none" }}
-                      src={this.state.image}
+                      src={
+                        this.state.image == null
+                          ? `${books.image}`
+                          : this.state.image != null
+                          ? `${this.state.image}`
+                          : null
+                      }
                       alt="background"
                     />
                     <div className="overlay" />
@@ -257,8 +267,20 @@ class DisplayOne extends React.Component {
                           <Hidden smDown>
                             <CardMedia
                               className="cardMedia"
-                              image={this.state.image}
-                              title={this.state.title}
+                              image={
+                                this.state.image == null
+                                  ? `${books.image}`
+                                  : this.state.image != null
+                                  ? `${this.state.image}`
+                                  : null
+                              }
+                              title={
+                                this.state.title == null
+                                  ? `${books.title}`
+                                  : this.state.title != null
+                                  ? `${this.state.title}`
+                                  : null
+                              }
                             />
                           </Hidden>
                         </Card>
@@ -268,7 +290,13 @@ class DisplayOne extends React.Component {
                   <Grid container spacing={5} className="mainGrid">
                     <Grid item xs={12} md={8}>
                       <Chip
-                        label={this.state.genre}
+                        label={
+                          this.state.genre == null
+                            ? `${books.genre}`
+                            : this.state.genre != null
+                            ? `${this.state.genre}`
+                            : null
+                        }
                         component="a"
                         href="/genre"
                         clickable
@@ -284,7 +312,11 @@ class DisplayOne extends React.Component {
                       >
                         <Grid item sm={8} spacing={4}>
                           <Typography variant="h4">
-                            {this.state.title}
+                            {this.state.title == null
+                              ? `${books.title}`
+                              : this.state.title != null
+                              ? `${this.state.title}`
+                              : null}
                           </Typography>
                         </Grid>
                         <Grid item sm={4} align="right">
@@ -308,7 +340,11 @@ class DisplayOne extends React.Component {
                       </Typography>
                       <Divider />
                       <Typography align="justify" variant="body1">
-                        {this.state.description}
+                        {this.state.description == null
+                          ? `${books.description}`
+                          : this.state.description != null
+                          ? `${this.state.description}`
+                          : null}
                       </Typography>
                     </Grid>
                     <Grid
