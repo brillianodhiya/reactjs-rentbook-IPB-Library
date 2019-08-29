@@ -8,11 +8,16 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import TextField from "@material-ui/core/TextField";
-import Axios from "axios";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { connect } from "react-redux";
+import { getGenres } from "../../public/action/genres";
+import { addBooks } from "../../public/action/books";
+import { compose } from "redux";
+import swal from "sweetalert";
+
 // eslint-disable-next-line
 const styles = theme => ({
   form: {
@@ -38,13 +43,14 @@ class addBook extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-      getGenre: [],
-      genre: '',
+      genres: [],
+      genre: "",
       title: "",
       description: "",
       image: "",
       setSelectedDate: new Date(Date.now()),
-      setOpen: false
+      setOpen: false,
+      show: false,
       };
       this.handleTitleChange = this.handleTitleChange.bind(this);
       this.handleDescriptChange = this.handleDescriptChange.bind(this);
@@ -52,23 +58,20 @@ class addBook extends React.Component {
       this.handleDateSelect = this.handleDateSelect.bind(this);
       this.handleGenreChange = this.handleGenreChange.bind(this);
     }
+    
+  componentDidMount = async () => {
+    await this.props.dispatch(getGenres());
+    this.setState({ genres: this.props.genres.genreList });
+    console.log(this.props.genres.genreList);
+  }
+
+  hiddenAlert = () => {
+    this.setState({ show: false });
+  }
 
   handleDateSelect = date => {
     this.setState({ setSelectedDate: date });
   };
-
-  componentDidMount() {
-    const url = "http://localhost:8888/books/genre";
-    Axios.get(url)
-      .then(response => response.data)
-      .then(data => {
-        this.setState({ getGenre: data });
-        console.log(this.state.getGenre);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
 
   handleTitleChange = event => {
     this.setState({ title: event.target.value });
@@ -94,24 +97,16 @@ class addBook extends React.Component {
     this.setState({ setOpen: false });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-
-    Axios.post(`http://localhost:8888/books/`, { 
-        title: this.state.title,
-        description: this.state.description,
-        image: this.state.image,
-        date_released: this.state.setSelectedDate,
-        genre: this.state.genre,
-         })
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-        window.location="/Home"
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const { title, description, image, setSelectedDate, genre } = this.state;
+    await this.props.dispatch(
+      addBooks(title, description, image, setSelectedDate, genre)
+    );
+    swal("Add Book Success!", "Please click the button!", "success")
+    .then(res => {
+      window.location.reload();
+    });
   };
   render() {
     const { classes } = this.props;
@@ -184,7 +179,7 @@ class addBook extends React.Component {
               id: "controlled-open-select"
             }}
           >
-            {this.state.getGenre.map(result => (
+            {this.state.genres.map(result => (
             <MenuItem key={result.codegenre} value={result.codegenre}>{result.keterangan}</MenuItem>
             ))}
           </Select>
@@ -207,4 +202,24 @@ addBook.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(addBook);
+const mapStateToProps = state => {
+  return {
+    genres: state.genres
+  };
+};
+
+export default compose(
+  withStyles(styles, {
+    name: 'addBook',
+  }),
+  connect(mapStateToProps)
+)(addBook);
+// export default withStyles(styles)(addBook);
+// export default compose(
+//   withStyles(styles, {
+//     name: 'Carousel',
+//   }),
+//   connect(state => ({
+//     books: state.books
+//   })),
+// )(Carousel);

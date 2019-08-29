@@ -11,8 +11,8 @@ class MediaCard extends React.Component {
     super();
 
     this.state = {
-      pageOfItems: [],
-    }
+      pageOfItems: []
+    };
     this.onChangePage = this.onChangePage.bind(this);
   }
 
@@ -22,32 +22,36 @@ class MediaCard extends React.Component {
     });
   }
   render() {
-    const { book } = this.props
+    const { book } = this.props;
     return (
       <div>
-      <Pagination items={book.bookList} onChangePage={this.onChangePage} />
-      <Grid container spacing={3}>
-        {book.bookList
-          ? this.state.pageOfItems.map ((books, index) => {
-            return (
-          <Grid item xs key={index}>
-            <div className="box">
-              <div className="imgBx">
-                <img src={books.image} alt="" />
-              </div>
-              <RouterLink to={`/${books.idbooks}`} style={{ textDecoration: 'none', color: 'black' }}>
-              <div className="content">
-                 <h3>{books.title}</h3>
-                <p>{books.description}</p>
-              </div>
-              </RouterLink>
-            </div>
-          </Grid>
-            )
-          })
-          : <Loading />
-        }
-      </Grid>
+        <Pagination items={book.bookList} onChangePage={this.onChangePage} />
+        <Grid container spacing={3}>
+          {book.bookList ? (
+            this.state.pageOfItems.map((books, index) => {
+              return (
+                <Grid item xs key={index}>
+                  <div className="box">
+                    <div className="imgBx">
+                      <img src={books.image} alt="" />
+                    </div>
+                    <RouterLink
+                      to={`/${books.idbooks}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <div className="content">
+                        <h3>{books.title}</h3>
+                        <p>{books.description}</p>
+                      </div>
+                    </RouterLink>
+                  </div>
+                </Grid>
+              );
+            })
+          ) : (
+            <Loading />
+          )}
+        </Grid>
       </div>
     );
   }
@@ -56,7 +60,7 @@ class MediaCard extends React.Component {
 const mapStateToProps = state => {
   return {
     book: state.book
-  }
-}
+  };
+};
 
-export default connect (mapStateToProps) (MediaCard);
+export default connect(mapStateToProps)(MediaCard);

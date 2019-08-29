@@ -31,7 +31,6 @@ import Carousel from "./carousel";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import jwtDecode from "jwt-decode";
 import AddBook from "./addBook";
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -112,7 +111,7 @@ const styles = theme => ({
     padding: 10
   },
   carousel: {
-    maxWidth: "1335px",
+    maxWidth: "1280px",
     display: "inline-block"
   },
   wrap: {
@@ -121,6 +120,8 @@ const styles = theme => ({
   },
   modal: {
     display: "flex",
+    width: '60%',
+    margin: '250px',
     alignItems: "center",
     justifyContent: "center"
   },

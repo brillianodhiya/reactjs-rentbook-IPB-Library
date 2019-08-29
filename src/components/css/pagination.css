@@ -1,9 +1,9 @@
 
-ul
+ul.pagination
 {   
+    margin: 0;
+    padding: 0;
 	display: flex;
-	margin: 0;
-	padding: 0;
 }
 ul li
 {

@@ -114,7 +114,7 @@ class Pagination extends React.Component {
         }
 
         return (
-            <ul>
+            <ul className="pagination">
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
                     <a onClick={() => this.setPage(1)}>First</a>
                 </li>
