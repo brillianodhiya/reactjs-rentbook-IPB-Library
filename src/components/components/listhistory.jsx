@@ -3,7 +3,6 @@ import "../css/explore.css";
 import { connect } from "react-redux";
 import { getRent } from "../../public/action/books";
 import Grid from "@material-ui/core/Grid";
-import NeverBorrow from "./neverborrow"
 
 class ListHistory extends React.Component {
   constructor(props) {
