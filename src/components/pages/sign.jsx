@@ -12,8 +12,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import logo from "../../bookshelf.svg";
-import Axios from "axios";
-import Privacy from "../components/Privacy"
+import Privacy from "../components/Privacy";
+import { connect } from "react-redux";
+import { userLogin } from "../../public/action/users";
+import { compose } from "redux";
 
 const styles = theme => ({
   root: {
@@ -66,117 +68,134 @@ class SignInSide extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-    }
+      email: "",
+      password: ""
+    };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
   }
 
   handleEmailChange = event => {
-    this.setState({ email: event.target.value })
-  }
+    this.setState({ email: event.target.value });
+  };
 
   handlePassword = event => {
-    this.setState({ password: event.target.value })
-  }
+    this.setState({ password: event.target.value });
+  };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
-    Axios.post(`http://localhost:8888/books/login`,{
-      email: this.state.email,
-      password: this.state.password,
-    })
-    .then(res => {
-      console.log(res)
-      window.localStorage.setItem('access_token', res.data.acces_token);
-      window.localStorage.setItem('username', res.data.username)
-      window.location="/Home"
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }
+    const { email, password } = this.state;
+    await this.props.dispatch(userLogin(email, password));
+  };
+
   render() {
     const { classes } = this.props;
-    return (
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Box
-          component="div"
-          display={{ xs: "none", sm: "block" }}
-          className={classes.textfloat}
-        >
-          <Typography component="h1" variant="h4">
-            IPB Library, <br />
-            The Place For Borrow Book &nbsp; &nbsp; &nbsp;
-          </Typography>
-        </Box>
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <img src={logo} className={classes.logo} alt="logo" />
-          <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Login
+    if (window.localStorage.getItem("access_token") == null) {
+      return (
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline />
+          <Box
+            component="div"
+            display={{ xs: "none", sm: "block" }}
+            className={classes.textfloat}
+          >
+            <Typography component="h1" variant="h4">
+              IPB Library, <br />
+              The Place For Borrow Book &nbsp; &nbsp; &nbsp;
             </Typography>
-            <Typography component="p">
-              Welcome Back, Please Login to your Account
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={this.handleEmailChange}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={this.handlePassword}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={this.setRedirect}
-              >
+          </Box>
+          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <img
+              src={logo}
+              className={classes.logo}
+              alt="logo"
+              component={RouterLink}
+              to="/Home"
+            />
+            <div className={classes.paper}>
+              <Typography component="h1" variant="h5">
                 Login
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link component={RouterLink} variant="body2" to={"/Home"}>
-                    Forgot password?
-                  </Link>
+              </Typography>
+              <Typography component="p">
+                Welcome Back, Please Login to your Account
+              </Typography>
+              <form className={classes.form} onSubmit={this.handleSubmit}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={this.handleEmailChange}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.handlePassword}
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={this.setRedirect}
+                >
+                  Login
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Link
+                      component={RouterLink}
+                      variant="body2"
+                      to={"/register"}
+                    >
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                  <div>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    &nbsp; &nbsp;&nbsp; &nbsp;
+                  </div>
+                  <Grid item>
+                    <Link component={RouterLink} variant="body2" to="/Home">
+                      {"No, i just want to check home"}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link component={RouterLink} variant="body2" to={"/register"}>
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-                <Privacy />
-              </Box>
-            </form>
-          </div>
+                <Box mt={5}>
+                  <Privacy />
+                </Box>
+              </form>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    } else {
+      return (window.location = "/Home");
+    }
   }
 }
 
@@ -184,4 +203,16 @@ SignInSide.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignInSide);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default compose(
+  withStyles(styles, {
+    name: "SignInSide"
+  }),
+  connect(mapStateToProps)
+)(SignInSide);
+// export default withStyles(styles)(SignInSide);

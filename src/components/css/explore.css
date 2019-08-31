@@ -1,0 +1,96 @@
+.cardsh
+{
+	position: absolute;
+	width: 360px;
+	height: 480px;
+	background: #000;
+}
+.cardsh .image 
+{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.cardsh .image  img
+{
+	width: 100%;
+	transition: .5s;
+}
+.cardsh:hover .image  img
+{
+	opacity: .5;
+	transform: translateX(30%);
+}
+.cardsh .details
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 70%;
+	height: 100%;
+	background: #ffc107;
+	transition: .5s;
+	transform-origin: left;
+	transform: perspective(2000px) rotateY(-90deg);
+}
+.cardsh:hover .details
+{
+	transform: perspective(2000px) rotateY(0deg);
+}
+.cardsh .details .center
+{
+	padding: 20px;
+	text-align: center;
+	background: #fff;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.cardsh .details .center h1
+{
+	margin: 0;
+	padding: 0;
+	color: #ff3636;
+	line-height: 20px;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+.cardsh .details .center h1 span
+{
+	font-size: 14px;
+	color: #262626;
+}
+.cardsh .details .center p
+{
+	margin: 10px 0;
+	padding: 0;
+	color: #262626;
+}
+.cardsh .details .center ul
+{
+	margin: 10px auto 0;
+	padding: 0;
+	display: table;
+}
+.cardsh .details .center ul li
+{
+	list-style: none;
+	margin: 0 5px;
+	float: left;
+}
+.cardsh .details .center ul li a
+{
+	display: block;
+	font-size: 11px;
+	background: #262626;
+	color: #fff;
+	width: auto;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	transition: .5s;
+}
+.cardsh .details .center ul li a:hover
+{
+	background: #ff3636;
+}

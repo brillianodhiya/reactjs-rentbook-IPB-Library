@@ -36,6 +36,10 @@ import Category from "../components/category";
 // eslint-disable-next-line
 const drawerWidth = 340;
 
+const user =
+  window.localStorage.getItem("name") != null
+    ? window.localStorage.getItem("name")
+    : "";
 const styles = theme => ({
   root: {
     display: "flex"
@@ -118,8 +122,8 @@ const styles = theme => ({
   },
   modal: {
     display: "flex",
-    width: '60%',
-    margin: '250px',
+    width: "60%",
+    margin: "250px",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -145,7 +149,7 @@ const styles = theme => ({
 class HomePage extends React.Component {
   state = {
     drawerIsOpen: false,
-    modalIsOpen: false,
+    modalIsOpen: false
   };
 
   handleDrawerOpen = () => {
@@ -164,243 +168,173 @@ class HomePage extends React.Component {
   };
 
   handleLogout = () => {
-    window.localStorage.removeItem('access_token')
-    window.localStorage.removeItem('username')
-    window.location="/Home"
-  }
+    localStorage.clear();
+    window.location = "/Home";
+  };
 
   render() {
     const { classes } = this.props;
-    if (window.localStorage.getItem("access_token") != null) {
-      return (
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: this.state.drawerIsOpen
-            })}
-          >
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
-                edge="start"
-                className={clsx(
-                  classes.menuButton,
-                  this.state.drawerIsOpen && classes.hide
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Category />
-              <TextField
-                id="standard-textarea"
-                label="Search by Title"
-                placeholder="Enter Keyword"
-                multiline
-                className={classes.input}
-                margin="normal"
-              />
-              <IconButton className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <img className={classes.floatingRight} src={logo} alt="" />
-              <Typography component="p" variant="h6" noWrap>
-                ꧁IPB Library꧂
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={this.state.drawerIsOpen}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <MenuIcon />
-              </IconButton>
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: this.state.drawerIsOpen
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.handleDrawerOpen}
+              edge="start"
+              className={clsx(
+                classes.menuButton,
+                this.state.drawerIsOpen && classes.hide
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Category />
+            <TextField
+              id="standard-textarea"
+              label="Search by Title"
+              placeholder="Enter Keyword"
+              multiline
+              className={classes.input}
+              margin="normal"
+            />
+            <IconButton className={classes.iconButton} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+            <img className={classes.floatingRight} src={logo} alt="" />
+            <Typography component="p" variant="h6" noWrap>
+              ꧁IPB Library꧂
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={this.state.drawerIsOpen}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={this.handleDrawerClose}>
+              <MenuIcon />
+            </IconButton>
+          </div>
+          {user != "" ? (
+            <div>
+              <Grid container justify="center" alignItems="center">
+                <Avatar
+                  alt={
+                    user != "" ? user.slice(1, user.length).trimLeft() : null
+                  }
+                  src={DefaultImage}
+                  className={classes.BigAvatar}
+                />
+                <br />
+              </Grid>
+              <Grid container justify="center" alignItems="center">
+                <Typography variant="h5" component="h2">
+                  {user != "" ? user.slice(1, user.length).trimLeft() : null}
+                </Typography>
+              </Grid>
             </div>
+          ) : null}
+          <Divider />
+          <List>
+            <ListItem button component={RouterLink} to="/explore">
+              <ListItemIcon>
+                <Explore />
+              </ListItemIcon>
+              <ListItemText primary="Explore" />
+            </ListItem>
 
-            <Grid container justify="center" alignItems="center">
-              <Avatar
-                alt={this.state.username}
-                src={DefaultImage}
-                className={classes.BigAvatar}
-              />
-              <br />
-            </Grid>
-            <Grid container justify="center" alignItems="center">
-              <Typography variant="h5" component="h2">
-                {window.localStorage.getItem("username")}
-              </Typography>
-            </Grid>
-
-            <Divider />
-            <List>
-              <ListItem button component={RouterLink} to="/explore">
-                <ListItemIcon>
-                  <Explore />
-                </ListItemIcon>
-                <ListItemText primary="Explore" />
-              </ListItem>
+            {user.startsWith("0 ") ? (
               <ListItem button component={RouterLink} to="/history">
                 <ListItemIcon>
                   <History />
                 </ListItemIcon>
                 <ListItemText primary="History" />
               </ListItem>
-
-              <ListItem button onClick={this.handleModalOpen}>
-                <ListItemIcon>
-                  <AddBox />
-                </ListItemIcon>
-                <ListItemText primary="Add Book*" />
-              </ListItem>
+            ) : user.startsWith("1 ") ? (
+              <div>
+                <ListItem button component={RouterLink} to="/history">
+                  <ListItemIcon>
+                    <History />
+                  </ListItemIcon>
+                  <ListItemText primary="History" />
+                </ListItem>
+                <ListItem button onClick={this.handleModalOpen}>
+                  <ListItemIcon>
+                    <AddBox />
+                  </ListItemIcon>
+                  <ListItemText primary="Add Book*" />
+                </ListItem>
+              </div>
+            ) : user == "" ? null : null}
+            {user != "" ? (
               <ListItem button onClick={this.handleLogout}>
-                <ListItemIcon>
-                  
-                </ListItemIcon>
-                <ListItemText primary="Log Out"/>
+                <ListItemIcon></ListItemIcon>
+                <ListItemText primary="Log Out" />
               </ListItem>
-
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={this.state.modalIsOpen}
-                onClose={this.handleModalClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500
-                }}
-              >
-                <Fade in={this.state.modalIsOpen}>
-                  <div className={classes.paper}>
-                    <h1 id="transition-modal-title">Add Data 📚</h1>
-                    <AddBook />
-                  </div>
-                </Fade>
-              </Modal>
-            </List>
-          </Drawer>
-          <main
-            className={clsx(classes.content, {
-              [classes.contentShift]: this.state.drawerIsOpen
-            })}
-          >
-            <div className={classes.drawerHeader} />
-
-            <div className={classes.wrap}>
-              <div className={classes.carousel}>
-                <Carousel />
-              </div>
-            </div>
-            <Typography component="h1" variant="h4">
-              <b>📚 List Books</b>
-            </Typography>
-            <MediaCard />
-          </main>
-        </div>
-      );
-    } else {
-      return (
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: this.state.drawerIsOpen
-            })}
-          >
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
-                edge="start"
-                className={clsx(
-                  classes.menuButton,
-                  this.state.drawerIsOpen && classes.hide
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              <TextField
-                id="standard-textarea"
-                label="Search by Title"
-                placeholder="Enter Keyword"
-                multiline
-                className={classes.input}
-                margin="normal"
-              />
-              <IconButton className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <img className={classes.floatingRight} src={logo} alt="" />
-              <Typography component="p" variant="h6" noWrap>
-                ꧁IPB Library꧂
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={this.state.drawerIsOpen}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <MenuIcon />
-              </IconButton>
-            </div>
-            <List>
-              <ListItem button component={RouterLink} to="/explore">
-                <ListItemIcon>
-                  <Explore />
-                </ListItemIcon>
-                <ListItemText primary="Explore" />
-              </ListItem>
+            ) : user == "" ? (
               <ListItem button component={RouterLink} to="/Login">
-                <ListItemIcon>
-                </ListItemIcon>
-                <ListItemText primary="Login"/>
+                <ListItemIcon></ListItemIcon>
+                <ListItemText primary="Login" />
               </ListItem>
-            </List>
-          </Drawer>
-          <main
-            className={clsx(classes.content, {
-              [classes.contentShift]: this.state.drawerIsOpen
-            })}
-          >
-            <div className={classes.drawerHeader} />
-            <div className={classes.wrap}>
-              <div className={classes.carousel}>
-                <Carousel />
-              </div>
+            ) : null}
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={this.state.modalIsOpen}
+              onClose={this.handleModalClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500
+              }}
+            >
+              <Fade in={this.state.modalIsOpen}>
+                <div className={classes.paper}>
+                  <h1 id="transition-modal-title">Add Data 📚</h1>
+                  <AddBook />
+                </div>
+              </Fade>
+            </Modal>
+          </List>
+        </Drawer>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: this.state.drawerIsOpen
+          })}
+        >
+          <div className={classes.drawerHeader} />
+
+          <div className={classes.wrap}>
+            <div className={classes.carousel}>
+              <Carousel />
             </div>
-            <Typography component="h1" variant="h4">
-              <b>📚 List Books</b>
-            </Typography>
-            <MediaCard />
-          </main>
-        </div>
-      );
-    }
+          </div>
+          <Typography component="h1" variant="h4">
+            <b>📚 List Books</b>
+          </Typography>
+          <MediaCard />
+        </main>
+      </div>
+    );
   }
 }
 
 HomePage.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(HomePage);

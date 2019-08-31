@@ -73,7 +73,7 @@ class MediaCard extends React.Component {
               );
             })
           ) : (
-            <div>loading...</div>
+            <Loading />
           )}
         </Grid>
       </div>

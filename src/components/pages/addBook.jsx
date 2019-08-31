@@ -98,12 +98,12 @@ class addBook extends React.Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { title, description, image, setSelectedDate, genre } = this.state;
-    await this.props.dispatch(
-      addBooks(title, description, image, setSelectedDate, genre)
-    );
+    const date = this.state.setSelectedDate.toDateString();
+    const { title, description, image, genre } = this.state;
+    await this.props.dispatch(addBooks(title, description, image, date, genre));
     swal("Add Book Success!", "Please click the button!", "success").then(
       res => {
+        console.log(res);
         window.location.reload();
       }
     );

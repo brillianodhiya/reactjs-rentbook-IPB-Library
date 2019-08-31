@@ -16,22 +16,22 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import History from "@material-ui/icons/History";
 import AddBox from "@material-ui/icons/AddBox";
 import Avatar from "@material-ui/core/Avatar";
+import Explore from "@material-ui/icons/Explore";
 import Grid from "@material-ui/core/Grid";
 import DefaultImage from "../../default.jpeg";
 import logo from "../../bookshelf.svg";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
 import "../../App.css";
-import MediaCard from "./card";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Home from "@material-ui/icons/Home";
 import Category from "../components/category";
 import AddBook from "./addBook";
+import ListHistory from "../components/listhistory";
 // eslint-disable-next-line
 const drawerWidth = 340;
 const user =
@@ -142,7 +142,7 @@ const styles = theme => ({
   }
 });
 
-class HomePage extends React.Component {
+class HistoryBook extends React.Component {
   state = {
     drawerIsOpen: false,
     modalIsOpen: false
@@ -254,19 +254,19 @@ class HomePage extends React.Component {
               </ListItem>
 
               {user.startsWith("0 ") ? (
-                <ListItem button component={RouterLink} to="/history">
+                <ListItem button component={RouterLink} to="/explore">
                   <ListItemIcon>
-                    <History />
+                    <Explore />
                   </ListItemIcon>
-                  <ListItemText primary="History" />
+                  <ListItemText primary="Explore" />
                 </ListItem>
               ) : user.startsWith("1 ") ? (
                 <div>
-                  <ListItem button component={RouterLink} to="/history">
+                  <ListItem button component={RouterLink} to="/explore">
                     <ListItemIcon>
-                      <History />
+                      <Explore />
                     </ListItemIcon>
-                    <ListItemText primary="History" />
+                    <ListItemText primary="Explore" />
                   </ListItem>
                   <ListItem button onClick={this.handleModalOpen}>
                     <ListItemIcon>
@@ -315,9 +315,9 @@ class HomePage extends React.Component {
           >
             <div className={classes.drawerHeader} />
             <Typography component="h1" variant="h4">
-              <b>📚 List Books</b>
+              <b>📚 History Books You've Borrow</b>
             </Typography>
-            <MediaCard />
+            <ListHistory />
           </main>
         </div>
       );
@@ -325,8 +325,8 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
+HistoryBook.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(HomePage);
+export default withStyles(styles)(HistoryBook);
