@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/explore.css";
+import "../css/history.css";
 import { connect } from "react-redux";
 import { getRent } from "../../public/action/books";
 import Grid from "@material-ui/core/Grid";
