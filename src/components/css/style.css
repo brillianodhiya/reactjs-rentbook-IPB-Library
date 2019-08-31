@@ -89,7 +89,7 @@ body {
   }
   
   .button {
-    margin: 1rem;
+    margin: 8px !important;
   }
   .chip {
       color: white !important;

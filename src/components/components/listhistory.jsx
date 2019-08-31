@@ -3,6 +3,7 @@ import "../css/history.css";
 import { connect } from "react-redux";
 import { getRent } from "../../public/action/books";
 import Grid from "@material-ui/core/Grid";
+import NeverBorrow from "./neverborrow";
 
 class ListHistory extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ListHistory extends React.Component {
 
   render() {
     console.log(this.state.history);
+    if (this.state.history.length != 0) {
     return (
       <div>
         <Grid container spacing={3}>
@@ -47,10 +49,13 @@ class ListHistory extends React.Component {
                     <p>{books.description}</p>
                     <ul>
                       <li>
-                        Rent<a href="">{books.rent_at}</a>
+                        Rent<a href={`/${books.idbooks}`}>{books.rent_at}</a>
                       </li>
                       <li>
-                        Back<a href="">{books.back_at}</a>
+                        Back<a href={`/${books.idbooks}`}>{books.back_at}</a>
+                      </li>
+                      <li>
+                        Limit<a href={`/${books.idbooks}`}>{books.expire_at}</a>
                       </li>
                     </ul>
                   </div>
@@ -61,6 +66,11 @@ class ListHistory extends React.Component {
         </Grid>
       </div>
     );
+    } else {
+      return(
+        <NeverBorrow />
+      )
+    }
   }
 }
 

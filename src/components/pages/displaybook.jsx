@@ -162,7 +162,9 @@ class DisplayOne extends React.Component {
     }).then(async value => {
       switch (value) {
         case "yes":
-          swal("Thankyou for Rentaling this book, dont froget to return", {
+          swal({
+            title: 'Thankyou for Borrow in IPB Library',
+            text: 'dont froget to return in 14 days',
             buttons: false,
             timer: 3000,
             icon: "success"

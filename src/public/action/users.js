@@ -57,7 +57,7 @@ export const userLogin = (email, password) => {
             timer: 3000,
             icon: "success"
           });
-          window.localStorage.setItem("access_token", res.data.acces_token);
+          window.localStorage.setItem("access_token","Bearer "+ res.data.acces_token);
           window.localStorage.setItem(
             "name",
             res.data.level + " " + res.data.name
