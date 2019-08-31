@@ -9,7 +9,7 @@ import SignInSide from "./components/pages/sign";
 import RegiInSide from "./components/pages/signup";
 import Home from "./components/pages/Home";
 import DisplayOne from "./components/pages/displaybook";
-import Loading from "./components/pages/loading";
+import HistoryBook from "./components/pages/history";
 import Explore from "./components/pages/explore";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Route path="/register" component={RegiInSide} />
           <Route path="/login" component={SignInSide} />
           <Route path="/explore" component={Explore} />
-          <Route path="/history" component={Loading} />
+          <Route path="/history" component={HistoryBook} />
           <Route exact path="/:idbooks" component={DisplayOne} />
           <Home />
         </Switch>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
+import Chip from "@material-ui/core/Chip";
 import "../../App.css";
 import { connect } from "react-redux";
 import Loading from "./loading";
@@ -41,7 +42,30 @@ class MediaCard extends React.Component {
                     >
                       <div className="content">
                         <h3>{books.title}</h3>
-                        <p>{books.description}</p>
+                        <p>
+                          {books.description} <br /> <br />
+                          {books.available === "Available" ? (
+                            <Chip
+                              label={books.available}
+                              component="a"
+                              clickable
+                              color="primary"
+                            />
+                          ) : books.available != "Available" ? (
+                            <Chip
+                              label={books.available}
+                              component="a"
+                              clickable
+                              color="secondary"
+                            />
+                          ) : null}
+                          <Chip
+                            label={books.genre}
+                            component="a"
+                            clickable
+                            color="default"
+                          />
+                        </p>
                       </div>
                     </RouterLink>
                   </div>
