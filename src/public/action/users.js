@@ -4,7 +4,7 @@ import swal from "sweetalert";
 export const userRegister = (username, name, email, password) => {
   return {
     type: "USER_REGISTER",
-    payload: Axios.post("http://localhost:8888/books/register", {
+    payload: Axios.post("https://floating-sierra-16009.herokuapp.com/books/register", {
       username,
       name,
       email,
@@ -44,7 +44,7 @@ export const userRegister = (username, name, email, password) => {
 export const userLogin = (email, password) => {
   return {
     type: "USER_LOGIN",
-    payload: Axios.post("http://localhost:8888/books/login", {
+    payload: Axios.post("https://floating-sierra-16009.herokuapp.com/books/login", {
       email,
       password
     })
