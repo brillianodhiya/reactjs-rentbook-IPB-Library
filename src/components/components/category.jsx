@@ -26,7 +26,7 @@ class Category extends React.Component {
           <input type="checkbox" className="dd-input" id="test" />
           <ul className="dd-menu">
             {this.state.genres.map(result => (
-              <RouterLink to={`/explore/${result.codegenre}`}>
+              <RouterLink to={`/explore/${result.keterangan}`}>
                 <li>{result.keterangan}</li>
               </RouterLink>
             ))}

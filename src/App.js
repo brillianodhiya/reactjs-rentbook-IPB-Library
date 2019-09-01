@@ -22,6 +22,7 @@ function App() {
           <Route path="/login" component={SignInSide} />
           <Route path="/explore" component={Explore} />
           <Route path="/history" component={HistoryBook} />
+          <Route path="/explore/:keterangan" component={Explore} />
           <Route exact path="/:idbooks" component={DisplayOne} />
           <Home />
         </Switch>
