@@ -32,8 +32,8 @@ This project is made by ReactJS for frontend and Redux for management global sta
 
 ## Screenshot Project
 <kbd>
-<img src="screenshot/reactss.png" width="500">
-<img src="screenshot/reactss4.png" width="500">
-<img src="screenshot/reactss2.png" width="500">
-<img src="screenshot/reactss3.png" width="500">
+<img src="screenshot/reactss.png" >
+<img src="screenshot/reactss4.png" >
+<img src="screenshot/reactss2.png" >
+<img src="screenshot/reactss3.png" >
 </kbd>
