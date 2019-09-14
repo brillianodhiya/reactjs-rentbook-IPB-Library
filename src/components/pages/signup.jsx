@@ -103,7 +103,7 @@ class RegiInSide extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    if (window.localStorage.getItem("access_token") == null) {
+    if (window.localStorage.getItem("access_token") != null) {
       return (
         <Grid container component="main" className={classes.root}>
           <CssBaseline />

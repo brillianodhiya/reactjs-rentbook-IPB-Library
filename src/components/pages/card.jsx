@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import "../../App.css";
 import { connect } from "react-redux";
-import Loading from "./loading";
+import Loading from "./loading"; 
 import Pagination from "../components/Pagination";
 // eslint-disable-next-line
 class MediaCard extends React.Component {
