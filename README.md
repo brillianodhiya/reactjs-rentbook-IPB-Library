@@ -5,6 +5,22 @@
 > this app build with ReactJs and [this](https://github.com/brillianodhiya/simple-rest-library) API
 > I've deploy this app, to try it at [here](https://quirky-fermat-eca999.netlify.com)
 
+## Features
+
+* Pagination
+* Shorting Book
+* Search Book
+* Borrow book
+* Stunning card hover animation using pure CSS
+* Stunning page history book using pure CSS
+* CRUD book
+
+## Used Framework
+
+* [MaterialUI](https://material-ui.com/)
+* [ReactJS](https://reactjs.org/)
+* [React-id-swiper](https://kidjp85.github.io/react-id-swiper/)
+
 ## How to run server locally
 
 * Install and Run [this API](https://github.com/brillianodhiya/simple-rest-library) first
