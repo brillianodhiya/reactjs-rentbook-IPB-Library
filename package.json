@@ -27,7 +27,7 @@
     "redux-promise-middleware": "^6.1.1",
     "sweetalert": "^2.1.2",
     "sweetalert-react": "^0.4.11",
-    "swiper": "^4.5.0",
+    "swiper": "^6.5.1",
     "typeface-roboto": "0.0.75"
   },
   "scripts": {
